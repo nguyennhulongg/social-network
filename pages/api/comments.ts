@@ -1,5 +1,6 @@
 import serverAuth from "@/libs/serverAuth";
 import { NextApiRequest, NextApiResponse } from "next";
+import { NotificationCreateInput } from './type';
 
 import prisma from "@/libs/prismadb";
 
@@ -36,12 +37,12 @@ export default async function handler(
       });
 
       if (post?.userId) {
-        await prisma.notification.create({
-          data: {
-            body: "Someone commented on your post!",
-            userId: post?.userId,
-          },
-        });
+        // await prisma?.notification?.create({
+        //   data: {
+        //     body: "Someone commented on your post!",
+        //     userId: post.userId,
+        //   },
+        // });
 
         await prisma.user.update({
           where: {

@@ -44,12 +44,12 @@ export default async function handler(
         });
 
         if (post?.userId) {
-          await prisma.notification.create({
-            data: {
-              body: `Someone liked your post!`,
-              userId: post.userId,
-            },
-          });
+          // await prisma.notification.create({
+          //   data: {
+          //     body: `Someone liked your post!`,
+          //     userId: post.userId,
+          //   },
+          // });
 
           await prisma.user.update({
             where: {
