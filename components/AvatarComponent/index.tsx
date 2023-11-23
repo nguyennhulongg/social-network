@@ -13,7 +13,7 @@ const AvatarComponent: React.FC<AvatarProps> = ({
   userId,
   isLarge,
   hasBorder,
-  className
+  className,
 }) => {
   const { data: fetcherUser } = useUser(userId);
   const router = useRouter();
@@ -30,13 +30,20 @@ const AvatarComponent: React.FC<AvatarProps> = ({
 
   return (
     <div
-      className={`${className} ${hasBorder ? "border-[1px] border-black" : ""} ${
+      className={`${className} ${
+        hasBorder ? "border-[1px] border-black" : ""
+      } ${
         isLarge ? "h-32 w-32" : "h-10 w-10"
       } rounded-full hover:opacity-90 transition cursor-pointer`}
     >
       <img
         onClick={onClick}
-        style={{ objectFit: "cover", borderRadius: "100%", height: "100%" }}
+        style={{
+          objectFit: "cover",
+          borderRadius: "100%",
+          height: "100%",
+          width: "100%",
+        }}
         src={fetcherUser?.profileImage || "/images/placeholder.png"}
         alt="Avatar"
       />

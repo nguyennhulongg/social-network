@@ -1,14 +1,14 @@
-import React, { useCallback, useRef, useState } from "react";
-import ButtonCommon from "../ButtonComponent";
-import useRegisterModal from "@/hooks/useRegisterModal";
-import useLoginModal from "@/hooks/useLoginModal";
 import useCurrentUser from "@/hooks/useCurrentUser";
-import AvatarComponent from "../AvatarComponent";
-import { SendOutlined } from "@ant-design/icons";
-import axios from "axios";
-import toast from "react-hot-toast";
+import useLoginModal from "@/hooks/useLoginModal";
 import usePost from "@/hooks/usePost";
 import usePosts from "@/hooks/usePosts";
+import useRegisterModal from "@/hooks/useRegisterModal";
+import { SendOutlined } from "@ant-design/icons";
+import axios from "axios";
+import React, { useCallback, useRef, useState } from "react";
+import toast from "react-hot-toast";
+import AvatarComponent from "../AvatarComponent";
+import ButtonCommon from "../ButtonComponent";
 
 interface IFormCommentProps {
   placeholder: string;
@@ -52,31 +52,30 @@ const FormCommentCommon: React.FC<IFormCommentProps> = ({
 
   return (
     <div className="mb-0 mt-5">
-      {currentUser ? (
-        <div className="flex flex-row gap-4">
-          <div>
-            <AvatarComponent hasBorder userId={currentUser?.id} />
-          </div>
-          <div
-            className="w-full bg-[#ffffff] 
+      <div className="flex flex-row gap-4">
+        <div>
+          <AvatarComponent hasBorder userId={currentUser?.id} />
+        </div>
+        <div
+          className="w-full bg-[#ffffff] 
                 border-[#d9d9d9]
                 border-[1px]
                 rounded-2xl
                 pb-1
                 "
-          >
-            <textarea
-              disabled={isLoading}
-              ref={textareaRef}
-              value={body}
-              onChange={(event) => {
-                setBody(event.target.value);
-                if (textareaRef.current) {
-                  textareaRef.current.style.height = "auto";
-                  textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
-                }
-              }}
-              className="
+        >
+          <textarea
+            disabled={isLoading}
+            ref={textareaRef}
+            value={body}
+            onChange={(event) => {
+              setBody(event.target.value);
+              if (textareaRef.current) {
+                textareaRef.current.style.height = "auto";
+                textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+              }
+            }}
+            className="
                 disabled:opacity-80
                 w-full 
                 px-5
@@ -89,34 +88,19 @@ const FormCommentCommon: React.FC<IFormCommentProps> = ({
                 placeholder-[#424242]-500 
                 text-[#424242]
             "
-              placeholder={placeholder}
-            ></textarea>
-            <div className="flex flex-row justify-end">
-              <ButtonCommon
-                disabled={isLoading || !body}
-                onClick={onSubmit}
-                label=""
-                icon={<SendOutlined />}
-                className="text-[16px] px-4 py-3 mr-2 !bg-transparent !text-[#424242] rounded-full transition"
-              />
-            </div>
-          </div>
-        </div>
-      ) : (
-        <div className="py-8">
-          <h1 className="text-[#424242] text-2xl text-center mb-4 font-bold">
-            Welcome to Post
-          </h1>
-          <div className="flex flex-row items-center justify-center gap-4">
-            <ButtonCommon label="Login" onClick={loginModal.onOpen} />
+            placeholder={placeholder}
+          ></textarea>
+          <div className="flex flex-row justify-end">
             <ButtonCommon
-              label="Register"
-              onClick={registerModal.onOpen}
-              secondary
+              disabled={isLoading || !body}
+              onClick={onSubmit}
+              label=""
+              icon={<SendOutlined />}
+              className="text-[16px] px-4 py-3 mr-2 !bg-transparent !text-[#424242] rounded-full transition"
             />
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 };

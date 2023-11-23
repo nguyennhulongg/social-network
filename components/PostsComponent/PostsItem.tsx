@@ -6,6 +6,7 @@ import React, { useCallback, useMemo, useRef, useState } from "react";
 import AvatarComponent from "../AvatarComponent";
 import {
   CommentOutlined,
+  EllipsisOutlined,
   LikeFilled,
   LikeOutlined,
   ShareAltOutlined,
@@ -13,6 +14,7 @@ import {
 import useLike from "@/hooks/useLike";
 import FormCommentCommon from "../FormCommentComponent";
 import CommentListComment from "../CommentListComponent";
+import PostSettingPopupCommon from "./PostSettingPopup";
 
 interface IPostProps {
   data?: Record<string, any>;
@@ -31,6 +33,7 @@ const PostItem: React.FC<IPostProps> = ({
   const likeRef = useRef<any>(null);
   const commentFormRef = useRef<any>(null);
   const [isComment, setIsComment] = useState(false);
+  const [isSettingPopup, setIsSettingPopup] = useState(false);
 
   const { data: currentUser } = useCurrentUser();
   const { toggleLike, hasLiked } = useLike({ postId: data.id, userId });
@@ -74,7 +77,7 @@ const PostItem: React.FC<IPostProps> = ({
       icon: !hasLiked ? (
         <LikeOutlined ref={likeRef} />
       ) : (
-        <LikeFilled style={{ transition: "0.15s" }} />
+        <LikeFilled ref={likeRef} style={{ transition: "0.15s" }} />
       ),
       key: "like",
       label: "Like",
@@ -91,7 +94,11 @@ const PostItem: React.FC<IPostProps> = ({
           if (commentFormRef.current) {
             commentFormRef.current.scrollIntoView({ behavior: "smooth" });
           }
-          setIsComment(true);
+          if (!currentUser) {
+            loginModal.onOpen();
+          } else {
+            setIsComment(true);
+          }
         }
       },
     },
@@ -99,35 +106,38 @@ const PostItem: React.FC<IPostProps> = ({
   ];
 
   return (
-    <div className="bg-white p-5 mb-5 pb-5 border-[#d9d9d9] border-[1px] rounded-xl ">
-      <div
-        onClick={() => {
-          if (!isDetailPost) {
-            router.push(`/posts/${data?.id}`);
-          }
-        }}
-        className={` ${
-          !isDetailPost
-            ? "hover:!bg-[#ebeaeaad] rounded-xl transition cursor-pointer"
-            : ""
-        }`}
-      >
-        <div className="flex">
-          <AvatarComponent className="h-10 w-10" userId={data?.user?.id} />
-          <div className="ml-2">
-            <p
-              className="text-common font-semibold cursor-pointer hover:text-[#555555] transition"
-              onClick={goToUser}
-            >
-              {data?.user?.name}
-            </p>
-            <div className="flex">
-              <p className="text-neutral-400 text-sm mr-2">
-                @{data?.user?.username}
+    <div className="main-children-bg">
+      <div>
+        <div className="flex justify-between relative">
+          <div className="flex">
+            <AvatarComponent
+              hasBorder
+              className="h-10 w-10"
+              userId={data?.user?.id}
+            />
+            <div className="ml-2">
+              <p
+                className="text-common font-semibold cursor-pointer hover:text-[#555555] transition"
+                onClick={goToUser}
+              >
+                {data?.user?.name}
               </p>
-              <p className="text-neutral-400 text-sm">{createdAt}</p>
+              <div className="flex">
+                <p className="text-neutral-400 text-sm mr-2">
+                  @{data?.user?.username}
+                </p>
+                <p className="text-neutral-400 text-sm">{createdAt}</p>
+              </div>
             </div>
           </div>
+          <div className="pt-1 px-3 hover:bg-[#4242421f] cursor-pointer transition rounded-full">
+            <EllipsisOutlined
+              onClick={() => setIsSettingPopup(!isSettingPopup ? true : false)}
+            />
+          </div>
+          {isSettingPopup && (
+            <PostSettingPopupCommon data={data} currentUser={currentUser} />
+          )}
         </div>
         <div className="mt-2 mb-2">
           <p className="text-common font-normal !text-[16px] break-words">
@@ -183,11 +193,12 @@ const PostItem: React.FC<IPostProps> = ({
       {data?.comments?.length !== 0 && (
         <CommentListComment isDetailPost={isDetailPost} postId={data.id} />
       )}
-      {isComment && (
-        <div ref={commentFormRef}>
-          <FormCommentCommon placeholder="Comment..." postId={data.id} />
-        </div>
-      )}
+      {isComment ||
+        (isDetailPost && (
+          <div ref={commentFormRef}>
+            <FormCommentCommon placeholder="Comment..." postId={data.id} />
+          </div>
+        ))}
     </div>
   );
 };
