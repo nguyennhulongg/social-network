@@ -92,7 +92,7 @@ const FormPostCommon: React.FC<IFormCommonProps> = ({
                 disabled={isLoading || !body}
                 onClick={onSubmit}
                 label="Post"
-                className="text-[16px] px-5 py-[5px] !mx-0"
+                className="text-[16px] px-5 py-[5px] !mx-0 font-medium"
               />
             </div>
           </div>
@@ -103,11 +103,16 @@ const FormPostCommon: React.FC<IFormCommonProps> = ({
             Welcome to Post
           </h1>
           <div className="flex flex-row items-center justify-center gap-4">
-            <ButtonCommon label="Login" onClick={loginModal.onOpen} />
+            <ButtonCommon
+              label="Login"
+              onClick={loginModal.onOpen}
+              className="px-10"
+            />
             <ButtonCommon
               label="Register"
               onClick={registerModal.onOpen}
               secondary
+              className="px-10"
             />
           </div>
         </div>

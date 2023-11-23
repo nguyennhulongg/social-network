@@ -20,7 +20,7 @@ const CommentListComment: React.FC<ICommentProps> = ({
           <AvatarComponent
             hasBorder
             userId={postData?.comments[0]?.userId}
-            className="!h-8 !w-8"
+            className="h-8 w-[37px] md:w-[35px] lg:w-[35px] xl:w-[33px]"
           />
           <div className="ml-3 w-full bg-[#ffffff] border-[#d9d9d9] border-[1px] rounded-2xl px-2 pb-2 ">
             <a
