@@ -16,7 +16,7 @@ body {
   }
   .main-background {
     background-color: white;
-    box-shadow: 0 2px 15px rgba(0,0,0,.06);
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.06);
   }
   .text-common {
     color: #424242;
@@ -30,5 +30,8 @@ body {
     margin-bottom: 30px;
     border: 1px solid #d9d9d9;
     border-radius: 12px;
+  }
+  .main-bg-color {
+    background-color: #18c4af;
   }
 }

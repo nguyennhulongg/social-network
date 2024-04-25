@@ -1,19 +1,29 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextApiRequest, NextApiResponse } from "next";
 
-import prisma from '@/libs/prismadb'
+import prisma from "@/libs/prismadb";
+import serverAuth from "@/libs/serverAuth";
 
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  const { currentUser } = await serverAuth(req, res);
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== 'GET') {
+  if (req.method !== "GET") {
     return res.status(405).end();
   }
 
   try {
     const users = await prisma.user.findMany({
-        orderBy: {
-            createdAt: 'desc'
-        }
-    })
+      orderBy: {
+        createdAt: "desc",
+      },
+      where: {
+        NOT: {
+          email: currentUser?.email,
+        },
+      },
+    });
 
     return res.status(200).json(users);
   } catch (error) {
