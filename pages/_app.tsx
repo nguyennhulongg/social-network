@@ -7,6 +7,7 @@ import LoginModal from "@/components/ModalComponent/LoginComponent";
 import RegisterModal from "@/components/ModalComponent/RegisterComponent";
 import "@/styles/globals.css";
 import EditModal from "@/components/ModalComponent/EditModalComponent";
+import ChatPopupCommon from "@/components/ChatPopupComponent";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (

@@ -16,7 +16,7 @@ const NotificationPopupCommon: React.FC<INotificationPopupProps> = ({
   const { data: notiData, isLoading } = useNotification(userId);
 
   return (
-    <div className="absolute top-[100px] left-5 bg-white border-[#d9d9d9] border-[1px] rounded-2xl w-[300px] px-5 py-2">
+    <div className="absolute top-[100px] left-5 bg-white border-[#d9d9d9] border-[1px] rounded-2xl w-[300px] px-5 py-2 z-50">
       <div className="flex items-center text-[#424242] text-[14px] font-semibold w-full justify-end">
         <Link href="/notifications" className="hover:underline transition mr-2">
           All notifications
